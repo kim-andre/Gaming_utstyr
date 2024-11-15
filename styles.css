@@ -1,0 +1,183 @@
+/* Grunnleggende reset for å fjerne standard marginer og padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Lys grå bakgrunn */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+header h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+header nav ul li {
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+header nav ul li a:hover {
+    color: #1e90ff;
+}
+
+/* Container for content */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Seksjon Styling */
+section {
+    margin-bottom: 40px;
+}
+
+/* Produkter Seksjon */
+#produkter h2, #guide h2, #omtaler h2, #nyheter h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.produkt-kategori {
+    margin-bottom: 30px;
+}
+
+.produkt-kategori h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.produkt-kategori ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.produkt-kategori ul li {
+    font-size: 1.2em;
+    margin: 8px 0;
+}
+
+.produkt-kategori ul li::before {
+    content: "✔️";
+    margin-right: 10px;
+    color: #1e90ff;
+}
+
+/* Styling for produktbilder */
+.produkt-bilde {
+    width: 100%; /* Gjør bildene responsiv og fyller containeren */
+    max-width: 400px; /* Maksimal bredde på bildene */
+    height: auto; /* Behold proporsjonene */
+    margin-bottom: 20px;
+    background-color: #f4f4f4; /* Bakgrunnsfarge lik nettsidens bakgrunn */
+    border-radius: 8px; /* Rundede kanter for et mer polert utseende */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Myk skygge for å få bildet til å skille seg ut */
+}
+
+/* Guide Seksjon */
+#guide h3 {
+    font-size: 1.6em;
+    margin-top: 20px;
+}
+
+#guide ul {
+    padding-left: 20px;
+}
+
+#guide ul li {
+    font-size: 1.2em;
+    margin: 8px 0;
+}
+
+/* Kundeomtaler Seksjon */
+blockquote {
+    background-color: #fff;
+    border-left: 4px solid #1e90ff;
+    padding: 20px;
+    margin: 20px 0;
+    font-style: italic;
+}
+
+blockquote em {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+footer p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+footer a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsiv Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul li {
+        margin: 10px 0;
+    }
+
+    .produkt-kategori h3 {
+        font-size: 1.6em;
+    }
+
+    #produkter h2, #guide h2, #omtaler h2, #nyheter h2 {
+        font-size: 1.8em;
+    }
+}
