@@ -20,6 +20,62 @@
                 infoDiv.style.display = 'none';
             }
         }
+
+        // Handlekurv array som holder produktene
+        let handlekurv = [];
+
+        // Funksjon for å legge til produkter i handlekurven
+        function leggTilHandlekurv(navn, pris) {
+            // Legg produktet til handlekurven (array)
+            handlekurv.push({ navn: navn, pris: pris });
+
+            // Oppdater handlekurvens visning
+            oppdaterHandlekurv();
+        }
+
+        // Funksjon for å oppdatere handlekurvens visning
+        function oppdaterHandlekurv() {
+            const handlekurvList = document.getElementById("handlekurv-list");
+            const totalPrisElement = document.getElementById("total-pris");
+
+            // Tøm handlekurv-listen
+            handlekurvList.innerHTML = '';
+
+            // Legg til hvert produkt i handlekurven
+            handlekurv.forEach((produkt, index) => {
+                const produktElement = document.createElement("div");
+                produktElement.classList.add("handlekurv-produkt");
+                produktElement.innerHTML = `
+                    <p>${produkt.navn} - ${produkt.pris} NOK</p>
+                    <button onclick="fjernFraHandlekurv(${index})">Fjern</button>
+                `;
+                handlekurvList.appendChild(produktElement);
+            });
+
+            // Kalkuler totalprisen
+            const totalPris = handlekurv.reduce((sum, produkt) => sum + produkt.pris, 0);
+            totalPrisElement.innerText = totalPris;
+
+            // Oppdater "Fullfør kjøp" knapp
+            if (handlekurv.length === 0) {
+                document.getElementById("fullforKjop").disabled = true;
+            } else {
+                document.getElementById("fullforKjop").disabled = false;
+            }
+        }
+
+        // Funksjon for å fjerne produkter fra handlekurven
+        function fjernFraHandlekurv(index) {
+            handlekurv.splice(index, 1); // Fjern produktet fra handlekurv-arrayet
+            oppdaterHandlekurv(); // Oppdater visningen
+        }
+
+        // Funksjon for å fullføre kjøpet
+        function fullforKjop() {
+            alert("Takk for kjøpet! Handlekurven er tom.");
+            handlekurv = []; // Tøm handlekurven
+            oppdaterHandlekurv(); // Oppdater visningen
+        }
     </script>
 </head>
 <body>
@@ -30,8 +86,8 @@
             <h1>Velkommen til styre Din ultimate guide til gamingutstyr!</h1>
             <nav>
                 <ul>
+                    <li><a href="#handlekurv">Handlekurv</a></li>
                     <li><a href="#produkter">Våre Produkter</a></li>
-                    <li><a href="#guide">Guide</a></li>
                     <li><a href="#kontakt">Kontakt</a></li>
                     <li><a href="hovedside.html">Hjem</a></li>
                 </ul>
@@ -53,6 +109,7 @@
                     <div class="produkt-info">
                         <h4>Razer Huntsman Elite</h4>
                         <p>Et mekanisk tastatur med Razer Opto-Mechanical brytere og RGB Chroma-belysning for maksimal respons og estetikk.</p>
+                        <button onclick="leggTilHandlekurv('Razer Huntsman Elite', 2200)">Legg til i handlekurv</button>
                         <button onclick="toggleMerInformasjon(
                             'Razer Huntsman Elite er et mekanisk tastatur som gir utrolig rask respons og fantastisk RGB-belysning.',
                             '<li>Razer Opto-Mechanical brytere for ultra-hurtig responstid</li>' +
@@ -76,6 +133,7 @@
                     <div class="produkt-info">
                         <h4>Logitech G Pro X Superlight</h4>
                         <p>En ultralett gamingmus designet for profesjonelle spillere med presisjon og komfort i tankene.</p>
+                        <button onclick="leggTilHandlekurv('Logitech G Pro X Superlight', 2980)">Legg til i handlekurv</button>
                         <button onclick="toggleMerInformasjon(
                             'Logitech G Pro X Superlight er en ultralett gamingmus laget for presisjon og komfort.',
                             '<li>Vekt: Kun 63g – superlett for raskere bevegelser</li>' +
@@ -99,13 +157,14 @@
                     <div class="produkt-info">
                         <h4>Razer Kraken V3</h4>
                         <p>Få en immersiv lydopplevelse med dette komfortable headsetet, perfekt for lange spilløkter og lagspill.</p>
+                        <button onclick="leggTilHandlekurv('Razer Kraken V3', 1110)">Legg til i handlekurv</button>
                         <button onclick="toggleMerInformasjon(
-                            'Razer Kraken V3 tilbyr en oppslukende lydopplevelse med THX Spatial Audio.',
-                            '<li>THX Spatial Audio for en oppslukende lydopplevelse</li>' +
-                            '<li>Komfortable memory foam-puter</li>' +
-                            '<li>Razer HyperClear Supercardioid mikrofon med bakgrunnsstøyreduksjon</li>' +
-                            '<li>Justerbar og fleksibel hodebånd for perfekt passform</li>' +
-                            '<li>USB og 3,5mm jack-tilkobling for bred kompatibilitet</li>',
+                            'Razer Kraken V3 gir fantastisk lydkvalitet med tilpasset komfort for gaming.',
+                            '<li>THX Spatial Audio for surroundlyd</li>' +
+                            '<li>Cooling Gel-pads for ekstra komfort under lange spilløkter</li>' +
+                            '<li>Razer HyperSense for taktil lydfeedback</li>' +
+                            '<li>Fleksibel og justerbar mikrofon</li>' +
+                            '<li>Kompatibel med PC, Mac, Xbox og PlayStation</li>',
                             'razer-kraken-v3'
                         )">Les mer</button>
                     </div>
@@ -113,35 +172,49 @@
                 <!-- Informasjon som vises etter klikk -->
                 <div id="merInformasjon-razer-kraken-v3" style="display:none;"></div>
             </div>
-
-            <!-- Skjermer -->
-            <div class="produkt-kategori">
-                <h3>Gaming Skjermer</h3>
-                <div class="produkt">
-                    <img src="https://images.samsung.com/is/image/samsung/in-gaming-monitor-c32g75tqsw-lc32g75tqswxxl-frontblack-335279889?$1300_1038_PNG$" alt="Samsung Odyssey G7" class="produkt-bilde">
-                    <div class="produkt-info">
-                        <h4>Samsung Odyssey G7</h4>
-                        <p>En ultrabred gaming-skjerm med krumning og høy oppdateringsfrekvens for den mest immersive spillopplevelsen.</p>
-                        <button onclick="toggleMerInformasjon(
-                            'Samsung Odyssey G7 er en ultrabred skjerm som gir en helt ny spillopplevelse.',
-                            '<li>32-tommers QHD-oppløsning (2560x1440)</li>' +
-                            '<li>240Hz oppdateringsfrekvens for jevne bevegelser</li>' +
-                            '<li>1ms responstid for øyeblikkelig feedback</li>' +
-                            '<li>1000R krumning for en mer oppslukende spillopplevelse</li>' +
-                            '<li>VESA DisplayHDR 600 for levende farger og høy kontrast</li>',
-                            'samsung-odyssey-g7'
-                        )">Les mer</button>
-                    </div>
-                </div>
-                <!-- Informasjon som vises etter klikk -->
-                <div id="merInformasjon-samsung-odyssey-g7" style="display:none;"></div>
+        </div>
+    </section>
+<!-- Skjermer -->
+<section id="skjermer" class="produkt-kategori">
+    <div class="container">
+        <h3>Gaming Skjermer</h3>
+        <div class="produkt">
+            <img src="https://images.samsung.com/is/image/samsung/in-gaming-monitor-c32g75tqsw-lc32g75tqswxxl-frontblack-335279889?$1300_1038_PNG$" alt="Samsung Odyssey G7" class="produkt-bilde">
+            <div class="produkt-info">
+                <h4>Samsung Odyssey G7</h4>
+                <p>En ultrabred gaming-skjerm med krumning og høy oppdateringsfrekvens for den mest immersive spillopplevelsen.</p>
+                <button onclick="leggTilHandlekurv('Samsung Odyssey G7', 4300)">Legg til i handlekurv</button>
+                <button onclick="toggleMerInformasjon(
+                    'Samsung Odyssey G7 er en toppmoderne gaming-skjerm med imponerende spesifikasjoner for både profesjonelle og amatører.',
+                    '<li>32-tommers QHD-oppløsning (2560x1440)</li>' +
+                    '<li>240Hz oppdateringsfrekvens for jevne bevegelser</li>' +
+                    '<li>1ms responstid for øyeblikkelig feedback</li>' +
+                    '<li>1000R krumning for en mer oppslukende spillopplevelse</li>' +
+                    '<li>VESA DisplayHDR 600 for levende farger og høy kontrast</li>',
+                    'samsung-odyssey-g7'
+                )">Les mer</button>
             </div>
+        </div>
+        <div id="merInformasjon-samsung-odyssey-g7" class="mer-informasjon" style="display:none;"></div>
+    </div>
+</section>
 
+
+
+    </div>
+
+    <!-- Handlekurv -->
+    <section id="handlekurv">
+        <div class="container">
+            <h2>Handlekurv</h2>
+            <div id="handlekurv-list"></div>
+            <p>Totalpris: <span id="total-pris">0</span> NOK</p>
+            <button id="fullforKjop" onclick="fullforKjop()" disabled>Fullfør kjøp</button>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="kontakt">
+     <!-- Footer -->
+     <footer id="kontakt">
         <div class="container">
             <p>&copy; 2024 styre – Spill smart, spill med stil.</p>
             <p><a href="mailto:kontakt@nettstedet.com">Kontakt oss</a> | <a href="https://www.facebook.com/nettstedet">Facebook</a> | <a href="https://twitter.com/nettstedet">Twitter</a></p>
