@@ -180,4 +180,25 @@ footer a:hover {
     #produkter h2, #guide h2, #omtaler h2, #nyheter h2 {
         font-size: 1.8em;
     }
+
+    #handlekurv {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        margin-top: 20px;
+    }
+    
+    .handlekurv-produkt {
+        margin-bottom: 10px;
+    }
+    
+    #total-pris {
+        font-weight: bold;
+    }
+    
+    #fullforKjop:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+    }
+    
 }
