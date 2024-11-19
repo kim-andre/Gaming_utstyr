@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Din ultimate guide til gamingutstyr. Finn tastaturer, mus, headset, skjermer og mer.">
+    <title>styre Gamingutstyr</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // JavaScript-funksjon for å vise/skjule mer informasjon og spesifikasjoner
+        function toggleMerInformasjon(tekst, spesifikasjoner, produktId) {
+            const infoDiv = document.getElementById("merInformasjon-" + produktId);
+
+            if (infoDiv.style.display === 'none' || infoDiv.style.display === '') {
+                // Hvis informasjonen ikke er synlig, vis den
+                infoDiv.innerHTML = "<h3>Mer informasjon:</h3>" + tekst + "<ul>" + spesifikasjoner + "</ul>";
+                infoDiv.style.display = 'block';
+            } else {
+                // Hvis informasjonen er synlig, skjul den
+                infoDiv.style.display = 'none';
+            }
+        }
+
+        // Handlekurv array som holder produktene
+        let handlekurv = [];
+
+        // Funksjon for å legge til produkter i handlekurven
+        function leggTilHandlekurv(navn, pris) {
+            // Legg produktet til handlekurven (array)
+            handlekurv.push({ navn: navn, pris: pris });
+
+            // Oppdater handlekurvens visning
+            oppdaterHandlekurv();
+        }
+
+        // Funksjon for å oppdatere handlekurvens visning
+        function oppdaterHandlekurv() {
+            const handlekurvList = document.getElementById("handlekurv-list");
+            const totalPrisElement = document.getElementById("total-pris");
+
+            // Tøm handlekurv-listen
+            handlekurvList.innerHTML = '';
+
+            // Legg til hvert produkt i handlekurven
+            handlekurv.forEach((produkt, index) => {
+                const produktElement = document.createElement("div");
+                produktElement.classList.add("handlekurv-produkt");
+                produktElement.innerHTML = `
+                    <p>${produkt.navn} - ${produkt.pris} NOK</p>
+                    <button onclick="fjernFraHandlekurv(${index})">Fjern</button>
+                `;
+                handlekurvList.appendChild(produktElement);
+            });
+
+            // Kalkuler totalprisen
+            const totalPris = handlekurv.reduce((sum, produkt) => sum + produkt.pris, 0);
+            totalPrisElement.innerText = totalPris;
+
+            // Oppdater "Fullfør kjøp" knapp
+            if (handlekurv.length === 0) {
+                document.getElementById("fullforKjop").disabled = true;
+            } else {
+                document.getElementById("fullforKjop").disabled = false;
+            }
+        }
+
+        // Funksjon for å fjerne produkter fra handlekurven
+        function fjernFraHandlekurv(index) {
+            handlekurv.splice(index, 1); // Fjern produktet fra handlekurv-arrayet
+            oppdaterHandlekurv(); // Oppdater visningen
+        }
+
+        // Funksjon for å fullføre kjøpet
+        function fullforKjop() {
+            alert("Takk for kjøpet! Handlekurven er tom.");
+            handlekurv = []; // Tøm handlekurven
+            oppdaterHandlekurv(); // Oppdater visningen
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Velkommen til styre Din ultimate guide til gamingutstyr!</h1>
+            <nav>
+                <ul>
+                    <li><a href="#produkter">Våre Produkter</a></li>
+                    <li><a href="#handlekurv">Handlekurv</a></li>
+                    <li><a href="#guide">Guide</a></li>
+                    <li><a href="#kontakt">Kontakt</a></li>
+                    <li><a href="hovedside.html">Hjem</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Produkter -->
+    <section id="produkter">
+        <div class="container">
+            <h2>Våre Produkter</h2>
+            <p>Utforsk våre nøye utvalgte gamingprodukter, og finn ut hvilke som passer best for deg!</p>
+
+            <!-- Tastaturer -->
+            <div class="produkt-kategori">
+                <h3>Tastaturer</h3>
+                <div class="produkt">
+                    <img src="https://www.elkjop.no/image/dv_web_D18000100293848/RAZHUNTSMANEL/razer-huntsman-elite-gamingtastatur.jpg" alt="Razer Huntsman Elite" class="produkt-bilde">
+                    <div class="produkt-info">
+                        <h4>Razer Huntsman Elite</h4>
+                        <p>Et mekanisk tastatur med Razer Opto-Mechanical brytere og RGB Chroma-belysning for maksimal respons og estetikk.</p>
+                        <button onclick="leggTilHandlekurv('Razer Huntsman Elite', 2200)">Legg til i handlekurv</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mus -->
+            <div class="produkt-kategori">
+                <h3>Gaming Mus</h3>
+                <div class="produkt">
+                    <img src="https://resource.logitechg.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/gaming/en/products/pro-x-superlight/pro-x-superlight-black-gallery-1.png?v=1" alt="Logitech G Pro X Superlight" class="produkt-bilde">
+                    <div class="produkt-info">
+                        <h4>Logitech G Pro X Superlight</h4>
+                        <p>En ultralett gamingmus designet for profesjonelle spillere med presisjon og komfort i tankene.</p>
+                        <button onclick="leggTilHandlekurv('Logitech G Pro X Superlight', 2980)">Legg til i handlekurv</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Headset -->
+            <div class="produkt-kategori">
+                <h3>Gaming Headset</h3>
+                <div class="produkt">
+                    <img src="https://www.elkjop.no/image/dv_web_D1800010021017974/473306/razer-kraken-v3-hypersense-gaming-headset-sort--pdp_main-1920.jpg" alt="Razer Kraken V3" class="produkt-bilde">
+                    <div class="produkt-info">
+                        <h4>Razer Kraken V3</h4>
+                        <p>Få en immersiv lydopplevelse med dette komfortable headsetet, perfekt for lange spilløkter og lagspill.</p>
+                        <button onclick="leggTilHandlekurv('Razer Kraken V3', 1110)">Legg til i handlekurv</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skjermer -->
+            <div class="produkt-kategori">
+                <h3>Gaming Skjermer</h3>
+                <div class="produkt">
+                    <img src="https://images.samsung.com/is/image/samsung/in-gaming-monitor-c32g75tqsw-lc32g75tqswxxl-frontblack-335279889?$1300_1038_PNG$" alt="Samsung Odyssey G7" class="produkt-bilde">
+                    <div class="produkt-info">
+                        <h4>Samsung Odyssey G7</h4>
+                        <p>En ultrabred gaming-skjerm med krumning og høy oppdateringsfrekvens for den mest immersive spillopplevelsen.</p>
+                        <button onclick="leggTilHandlekurv('Samsung Odyssey G7', 4000)">Legg til i handlekurv</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Handlekurv -->
+    <section id="handlekurv">
+        <div class="container">
+            <h2>Handlekurv</h2>
+            <div id="handlekurv-list"></div>
+            <p>Totalpris: <span id="total-pris">0</span> NOK</p>
+            <button id="fullforKjop" onclick="fullforKjop()" disabled>Fullfør Kjøp</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="kontakt">
+        <div class="container">
+            <p>&copy; 2024 styre – Spill smart, spill med stil.</p>
+            <p><a href="mailto:kontakt@nettstedet.com">Kontakt oss</a> | <a href="https://www.facebook.com/nettstedet">Facebook</a> | <a href="https://twitter.com/nettstedet">Twitter</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
